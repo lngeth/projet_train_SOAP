@@ -6,11 +6,11 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/lngeth/OneDrive/Bureau/Laurent Cours/2A/SysAuto/projet_train/RESTTrainFiltering/webContent/WEB-INF/lib/mysql-connector-j-8.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lngeth/OneDrive/Bureau/Laurent Cours/2A/SysAuto/projet_train/RESTTrainFiltering/webContent/WEB-INF/lib/org.restlet.ext.servlet.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lngeth/OneDrive/Bureau/Laurent Cours/2A/SysAuto/projet_train/RESTTrainFiltering/webContent/WEB-INF/lib/org.restlet.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lngeth/OneDrive/Bureau/Laurent Cours/2A/SysAuto/projet_train/RESTTrainFiltering/webContent/WEB-INF/lib/org.restlet.ext.jackson.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lngeth/OneDrive/Bureau/Laurent Cours/2A/SysAuto/projet_train/RESTTrainFiltering/webContent/WEB-INF/lib/org.json.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lngeth/OneDrive/Bureau/Laurent Cours/2A/SysAuto/projet_train/RESTTrainFiltering/webContent/WEB-INF/lib/org.restlet.ext.json.jar"/>
+	<classpathentry kind="lib" path="webContent/WEB-INF/lib/mysql-connector-j-8.1.0.jar"/>
+	<classpathentry kind="lib" path="webContent/WEB-INF/lib/org.json.jar"/>
+	<classpathentry kind="lib" path="webContent/WEB-INF/lib/org.restlet.ext.jackson.jar"/>
+	<classpathentry kind="lib" path="webContent/WEB-INF/lib/org.restlet.ext.json.jar"/>
+	<classpathentry kind="lib" path="webContent/WEB-INF/lib/org.restlet.ext.servlet.jar"/>
+	<classpathentry kind="lib" path="webContent/WEB-INF/lib/org.restlet.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
