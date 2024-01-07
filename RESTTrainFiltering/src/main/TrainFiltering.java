@@ -3,7 +3,6 @@ package main;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -11,10 +10,8 @@ import java.util.Date;
 import java.util.ArrayList;
 
 import org.restlet.resource.Get;
-import org.restlet.data.MediaType;
 import org.restlet.resource.ServerResource;
 import org.restlet.representation.Representation;
-import org.restlet.ext.jackson.JacksonRepresentation;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 
@@ -97,7 +94,7 @@ public class TrainFiltering extends ServerResource {
 		} catch(Exception e) {
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("listTrain", "Error request");
-			return new JacksonRepresentation(jsonObject);
+			return new JsonRepresentation(jsonObject);
 		}
 	}
 	

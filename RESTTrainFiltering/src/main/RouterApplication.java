@@ -14,6 +14,8 @@ public class RouterApplication extends Application {
 		Router router = new Router(getContext());
 		// Defines only two routes
 		router.attach("/train/filter/{idDeparture}/{idArrival}/{outboundDateTime}/{returnDateTime}/{nbTickets}/{travelClass}", TrainFiltering.class);
+		router.attach("/station/all", Stations.class);
+		
 		return router;
 	}
 }

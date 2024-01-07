@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>{% block title %}{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+</head>
+
+<body>
+  <nav>
+    <a href="{% url 'index' %}">Accueil</a>
+    <a href="{% url 'searchTrain' %}">rechercher un train</a>
+  </nav>
+
+  <div id="main_content">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+
+<script src="{% static 'js/index.js' %}"></script>
+</html>

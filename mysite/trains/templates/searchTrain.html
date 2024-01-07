@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Recherche train{% endblock %}
+
+{% block content %}
+<h1>Recherche de train</h1>
+
+<div>
+  <form action="{% url 'searchTrain' %}" method="post">
+    {% csrf_token %}
+  
+    <div>
+      <select name="departure">
+        {% for s in allStations %}
+        <option value="{{ s.id }}">{{ s.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <select name="arrival">
+        {% for s in allStations %}
+        <option value="{{ s.id }}">{{ s.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      {{ form.outboundDate }}
+      {{ form.outboundTime }}
+    </div>
+
+    <div>
+      {{ form.returnDate }}
+      {{ form.returnTime }}
+    </div>
+
+    <div>
+      {{ form.nbTickets }}
+    </div>
+
+    <div>
+      {{ form.travelClass }}
+    </div>
+  
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+{% endblock %}
