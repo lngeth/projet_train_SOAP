@@ -1,4 +1,4 @@
-package main;
+package train;
 
 import org.restlet.Application;
 import org.restlet.Restlet;

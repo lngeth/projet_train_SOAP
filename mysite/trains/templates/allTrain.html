@@ -5,13 +5,97 @@
 {% block content %}
 <h1>Résultats trains</h1>
 
-{% if res.listTrain == "No available trains" %}
-<p>Pas de résultat</p>
+{% if errorMessage %}
+<p>Aucun trains ne repondent à vos critères...</p>
 {% else %}
+
 <div>
-  {% for t in res.listTrain %}
-  <p>Train id n°{{t}}</p>
-  {% endfor %}
+  <p>Vous voyagez en {{ travelClass }}</p>
 </div>
+
+<form action="{% url 'reserveTrip' %}" method="post">
+{% csrf_token %}
+
+<input type="hidden" name="nbTickets" value="{{ nbTickets }}" />
+
+<div>
+  <h2>Trains aller</h2>
+  {% if outboundTrains %}
+  <fieldset>
+    <legend>Choisissez un train aller</legend>
+    {% for t in outboundTrains %}
+    <div>
+      <input
+        type="radio" id="id_{{t.name}}" name="outboundVoyage" 
+        value='{
+          "idVoyage": {{ t.idVoyage }},
+          "prixFlexibilite": {{ t.prixFlexibilite }},
+          "travelClass": "{{ travelClass }}",
+          "idTrain": {{ t.id }}
+        }' 
+        required
+      />
+      <label for="id_{{t.name}}">
+        {{t.name}} -- {{ t.dateDepart }} -- 
+        {% if travelClass == 'First' %}
+        {{ t.prixFirst }}
+        {% elif travelClass == 'Standard' %}
+        {{ t.prixStandard }}
+        {% else %}
+        {{ t.prixBusiness }}
+        {% endif %}€
+      </label>
+    </div>
+    {% endfor %}
+  </fieldset>
+  {% else %}
+  <p>Pas de train aller</p>
+  {% endif %}
+</div>
+
+<div>
+  <h2>Trains retour</h2>
+  {% if returnTrains %}
+  <fieldset>
+    <legend>Choisissez un train retour</legend>
+    <div>
+      <input type="radio" id="id_{{t.name}}" name="returnVoyage" value="None" required/>
+      <label for="id_{{t.name}}">Pas de retour</label>
+    </div>
+    {% for t in returnTrains %}
+    <div>
+      <input 
+        type="radio" id="id_{{t.name}}" name="returnVoyage" 
+        value='{
+          "idVoyage": {{ t.idVoyage }},
+          "prixFlexibilite": {{ t.prixFlexibilite }},
+          "travelClass": "{{ travelClass }}",
+          "idTrain": {{ t.id }}
+        }'
+      />
+      <label for="id_{{t.name}}">
+        {{t.name}} -- {{ t.dateDepart }} -- 
+        {% if travelClass == 'First' %}
+        {{ t.prixFirst }}
+        {% elif travelClass == 'Standard' %}
+        {{ t.prixStandard }}
+        {% else %}
+        {{ t.prixBusiness }}
+        {% endif %}€
+      </label>
+    </div>
+    {% endfor %}
+  </fieldset>
+  {% else %}
+  <p>Pas de train retour</p>
+  {% endif %}
+</div>
+
+<div>
+  <input type="submit" value="Submit">
+</div>
+</form>
+
 {% endif %}
+
 {% endblock %}

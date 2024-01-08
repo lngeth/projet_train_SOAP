@@ -10,7 +10,7 @@
     {% csrf_token %}
   
     <div>
-      <select name="departure">
+      <select name="departure" required>
         {% for s in allStations %}
         <option value="{{ s.id }}">{{ s.name }}</option>
         {% endfor %}
@@ -18,7 +18,7 @@
     </div>
 
     <div>
-      <select name="arrival">
+      <select name="arrival" required>
         {% for s in allStations %}
         <option value="{{ s.id }}">{{ s.name }}</option>
         {% endfor %}
@@ -43,7 +43,9 @@
       {{ form.travelClass }}
     </div>
   
-    <input type="submit" value="Submit">
+    <div>
+      <input type="submit" value="Submit">
+    </div>
   </form>
 </div>
 

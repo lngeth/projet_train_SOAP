@@ -15,7 +15,7 @@ public class TrainSearch {
 	 */
 	public String searchByAllCriterias(int idDeparture, int idArrival, String outboundDateTime, String returnDateTime, int nbTickets, String travelClass) {
 		try {
-			String res = HttpCall.sendGET("http://localhost:8182/train/filter/" + idDeparture +
+			String res = HttpCall.sendGET("http://localhost:8080/REST_TrainFiltering/train/filter/" + idDeparture +
 					"/" + idArrival + "/" + outboundDateTime + "/" + returnDateTime +
 					"/" + nbTickets + "/" + travelClass);
             return res;

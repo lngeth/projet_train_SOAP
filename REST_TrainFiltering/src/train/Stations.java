@@ -1,4 +1,4 @@
-package main;
+package train;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,7 +30,7 @@ public class Stations extends ServerResource {
 			
 			if (!rs.next()) {
 				JSONObject obj = new JSONObject();
-				obj.put("listStation", "No station available");
+				obj.put("error", "No station available");
 				jsonArray.put(obj);
 			} else {
 				do {		
@@ -47,7 +47,7 @@ public class Stations extends ServerResource {
 			return jsonRepresentation;
 		} catch(Exception e) {
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("listTrain", "Error request");
+			jsonObject.put("error", "Error request");
 			return new JsonRepresentation(jsonObject);
 		}
 	}
