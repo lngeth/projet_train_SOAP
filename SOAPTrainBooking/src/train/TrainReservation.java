@@ -2,15 +2,29 @@ package train;
 
 import utils.HttpCall;
 
-import java.util.Iterator;
-
 import org.json.JSONObject;
 
 public class TrainReservation {
 	public String reserveTrain(int[] idClient, int[] flex, String[] travelClass, int[] idVoyage, int nbTickets) {
 		try {
-			String res = HttpCall.sendGET("http://localhost:8080/REST_TrainFiltering/train/billet/reserve/" +
-		idClient + '/' + flex + '/' + travelClass + '/' + idVoyage);
+			String param_post = "";
+			
+			for (int id : idClient) {
+				param_post += "idClient=" + Integer.toString(id) + "&";
+			}
+			for (int f : flex) {
+				param_post += "flex=" + Integer.toString(f) + "&";
+			}
+			for (String t : travelClass) {
+				param_post += "travelClass=" + t + "&";
+			}
+			for (int id : idVoyage) {
+				param_post += "idVoyage=" + Integer.toString(id) + "&";
+			}
+			param_post += "nbTickets=" + nbTickets;
+			System.out.println("parampost :" + param_post);
+			
+			String res = HttpCall.sendPOST("http://localhost:8080/REST_TrainFiltering/train/billet/reserve", param_post);
 			JSONObject json = new JSONObject(res);
 			res = "";
 			

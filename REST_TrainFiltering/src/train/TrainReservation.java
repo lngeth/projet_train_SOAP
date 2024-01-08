@@ -16,25 +16,16 @@ public class TrainReservation extends ServerResource {
 	@Post
 	public Representation reserveTrain(Form form) {
 		try {		
-			System.out.println("coucoucouocuouo");
 			Class.forName("com.mysql.jdbc.Driver");  
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/train_project","lngeth","0207");
 			
-			System.out.println("connexion à la BD réussie");
-			
-			System.out.println("création du form");
-			
 			// Retrieve parameters
 			int nbTickets = Integer.parseInt((String) form.getValues("nbTickets"));
-			System.out.println("nb tickets : " + nbTickets);
 			String[] idClient = form.getValuesArray("idClient");
-			System.out.println("idClient	 1 2 : " + idClient[0] + "/" + idClient[1]);
 			String[] flex = form.getValuesArray("flex");
 			String[] idVoyage = form.getValuesArray("idVoyage");
 			String[] travelClass = form.getValuesArray("travelClass");
 			
-			System.out.println("idVoyage 1 2 : " + idVoyage[0] + "/" + idVoyage[1]);
-			System.out.println("nbtickets : " + nbTickets);
 			// Return variable
 			JSONObject jsonObject = new JSONObject();
 			
@@ -45,7 +36,6 @@ public class TrainReservation extends ServerResource {
 				jsonObject.put("success", false);
 				return new JsonRepresentation(jsonObject);
 			}
-			System.out.println("ici");
 			
 			PreparedStatement preparedStatement = null;
 			// Verify availability of trip
@@ -83,7 +73,6 @@ public class TrainReservation extends ServerResource {
 						break;
 					}
 			}
-			System.out.println("icii");
 			
 			int[] tabInsertStatus = new int[idClient.length * nbTickets]; 
 			if (allGood) { // Execute insert query

@@ -129,38 +129,30 @@ def reserveTrip(request):
 
 def comfirmReservation(request):
     if request.method == "POST":
+        idClient = 1 # TODO Récupérer l'ID client
+        
         outboundVoyageValidated = json.loads(request.POST.get('outboundVoyageValidated'))
+        idClient = [idClient]
+        flex = [outboundVoyageValidated['flex']]
+        travelClass = [outboundVoyageValidated['travelClass']]
+        idVoyage = [outboundVoyageValidated['idVoyage']]
+        
         returnVoyageValidated = 0
         if (request.POST.get('returnVoyageValidated') is not None):
             returnVoyageValidated = json.loads(request.POST.get('returnVoyageValidated'))
+            idClient.append(idClient)
+            flex.append(returnVoyageValidated['flex'])
+            travelClass.append(returnVoyageValidated['travelClass'])
+            idVoyage.append(returnVoyageValidated['idVoyage'])
         print("outbound flex:", outboundVoyageValidated)
         print("return flex:", returnVoyageValidated)
         
-        idClient = 1 # TODO Récupérer l'ID client
-        
-        resReservation = []
-        resCallAPISOAP = ""
-        resCallAPISOAP = appel_reservation_train_soap(idClient, outboundVoyageValidated['flex'], outboundVoyageValidated['travelClass'], outboundVoyageValidated['idVoyage'])
-        if (resCallAPISOAP == "Successful reservation"):
-            resReservation.append(1)
-            if (returnVoyageValidated != 0): # il y a un retour
-                resCallAPISOAP = appel_reservation_train_soap(idClient, returnVoyageValidated['flex'], returnVoyageValidated['travelClass'], returnVoyageValidated['idVoyage'])
-                if resCallAPISOAP == "Successful reservation":
-                    resReservation.append(1)
-        
-        allGood = 1
-        for r in resReservation:
-            if r == 0:
-                allGood = 0
-        
-        if (allGood == 1):
-            return render(request, 'success.html', {})
-        else:
-            return render(request, 'failure.html', {})
+        res = appel_reservation_train_soap(idClient, flex, travelClass, idVoyage, outboundVoyageValidated['nbTickets'])
+        return render(request, 'recapReservation.html', {'statusReservation': res})
     else:
         return redirect(request, 'index')
     
-def appel_reservation_train_soap(idClient, flex, travelClass, idVoyage):
+def appel_reservation_train_soap(idClient, flex, travelClass, idVoyage, nbTickets):
     wsdl_url = 'http://localhost:8080/SOAPTrainBooking/services/TrainReservation?wsdl'
 
     history = HistoryPlugin()
@@ -171,7 +163,8 @@ def appel_reservation_train_soap(idClient, flex, travelClass, idVoyage):
     result = client.service.reserveTrain(idClient=idClient,
                                       flex=flex,
                                       travelClass=travelClass,
-                                      idVoyage=idVoyage)
+                                      idVoyage=idVoyage,
+                                      nbTickets=nbTickets)
     
     xml_soap = etree.tostring(history.last_received["envelope"], encoding="unicode", pretty_print=True)
     print(xml_soap)
