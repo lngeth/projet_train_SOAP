@@ -12,6 +12,10 @@
     <div>
       <p>Voyage n°{{ outboundVoyage.idVoyage }}</p>
       <p>Train n°{{ outboundVoyage.idTrain }}</p>
+      <p>
+        {{ nbTickets }} billets à {{ outboundVoyage.prixBilletOutbound }} <br>
+        TOTAL ALLER = {% widthratio outboundVoyage.prixBilletOutbound 1 nbTickets %}
+      </p>
     </div>
 
     <fieldset>
@@ -22,7 +26,8 @@
           value='{
             "flex": 1,
             "idVoyage": {{ outboundVoyage.idVoyage }},
-            "travelClass": "{{ outboundVoyage.travelClass }}"
+            "travelClass": "{{ outboundVoyage.travelClass }}",
+            "nbTickets": "{{ nbTickets }}"
           }' 
           required
           />
@@ -33,7 +38,8 @@
           value='{
             "flex": 0,
             "idVoyage": {{ outboundVoyage.idVoyage }},
-            "travelClass": "{{ outboundVoyage.travelClass }}"
+            "travelClass": "{{ outboundVoyage.travelClass }}",
+            "nbTickets": "{{ nbTickets }}"
           }' 
           required 
         />
@@ -48,6 +54,11 @@
     <div>
       <p>Voyage n°{{ returnVoyage.idVoyage }}</p>
       <p>Train n°{{ returnVoyage.idTrain }}</p>
+
+      <p>
+        {{ nbTickets }} billets à {{ returnVoyage.prixBilletReturn }} <br>
+        TOTAL ALLER = {% widthratio returnVoyage.prixBilletReturn 1 nbTickets %}
+      </p>
     </div>
 
     <fieldset>
@@ -57,7 +68,8 @@
           value='{
             "flex": 1,
             "idVoyage": {{ returnVoyage.idVoyage }},
-            "travelClass": {{ returnVoyage.travelClass }}
+            "travelClass": {{ returnVoyage.travelClass }},
+            "nbTickets": "{{ nbTickets }}"
           }' 
           required 
         />
@@ -68,7 +80,8 @@
           value='{
             "flex": 0,
             "idVoyage": {{ returnVoyage.idVoyage }},
-            "travelClass": {{ returnVoyage.travelClass }}
+            "travelClass": {{ returnVoyage.travelClass }},
+            "nbTickets": "{{ nbTickets }}"
           }' 
           required
         />

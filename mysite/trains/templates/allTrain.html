@@ -10,7 +10,7 @@
 {% else %}
 
 <div>
-  <p>Vous voyagez en {{ travelClass }}</p>
+  <p>Vous voyagez en {{ travelClass }} et vous souhaitez {{ nbTickets }} billet(s)</p>
 </div>
 
 <form action="{% url 'reserveTrip' %}" method="post">
@@ -30,20 +30,15 @@
         value='{
           "idVoyage": {{ t.idVoyage }},
           "prixFlexibilite": {{ t.prixFlexibilite }},
+          "prixBilletOutbound": {{ prixBilletOutbound }},
+          "nbTickets": {{ nbTickets }},
           "travelClass": "{{ travelClass }}",
           "idTrain": {{ t.id }}
         }' 
         required
       />
       <label for="id_{{t.name}}">
-        {{t.name}} -- {{ t.dateDepart }} -- 
-        {% if travelClass == 'First' %}
-        {{ t.prixFirst }}
-        {% elif travelClass == 'Standard' %}
-        {{ t.prixStandard }}
-        {% else %}
-        {{ t.prixBusiness }}
-        {% endif %}€
+        {{t.name}} -- {{ t.dateDepart }} -- {{ prixBilletOutbound }}€
       </label>
     </div>
     {% endfor %}
@@ -69,19 +64,14 @@
         value='{
           "idVoyage": {{ t.idVoyage }},
           "prixFlexibilite": {{ t.prixFlexibilite }},
+          "prixBilletReturn": {{ prixBilletReturn }},
+          "nbTickets": {{ nbTickets }},
           "travelClass": "{{ travelClass }}",
           "idTrain": {{ t.id }}
         }'
       />
       <label for="id_{{t.name}}">
-        {{t.name}} -- {{ t.dateDepart }} -- 
-        {% if travelClass == 'First' %}
-        {{ t.prixFirst }}
-        {% elif travelClass == 'Standard' %}
-        {{ t.prixStandard }}
-        {% else %}
-        {{ t.prixBusiness }}
-        {% endif %}€
+        {{t.name}} -- {{ t.dateDepart }} -- {{ prixBilletReturn }}€
       </label>
     </div>
     {% endfor %}

@@ -26,6 +26,8 @@ def searchTrain(request):
             outboundTS, outboundDateTime = convert_to_timestamp(form.cleaned_data['outboundDate'], form.cleaned_data['outboundTime'])
             returnTS, returnDateTime = convert_to_timestamp(form.cleaned_data['returnDate'], form.cleaned_data['returnTime'])
 
+            prixBilletOutbound = 0
+            prixBilletReturn = 0
             outboundTrains = []
             returnTrains = []
             errorMessage = ""
@@ -36,15 +38,29 @@ def searchTrain(request):
                 for t in res:
                     if (is_in_the_day(outboundDateTime, t["dateDepart"])):
                         outboundTrains.append(t)
+                        if (prixBilletOutbound == 0):
+                            if (travelClass == "First"):
+                                prixBilletOutbound = t['prixFirst']
+                            elif (travelClass == "Standard"):
+                                prixBilletOutbound = t['prixStandard']
+                            else:
+                                prixBilletOutbound = t['prixBusiness']
                     else:
                         returnTrains.append(t)
+                        if (prixBilletReturn == 0):
+                            if (travelClass == "First"):
+                                prixBilletReturn = t['prixFirst']
+                            elif (travelClass == "Standard"):
+                                prixBilletReturn = t['prixStandard']
+                            else:
+                                prixBilletReturn = t['prixBusiness']
             else:
                 errorMessage = "No available train"
                 
             print("résultat requête :", res)
             print("conversion du résultat en json :", type(res))
             
-            return render(request, "allTrain.html", {'errorMessage': errorMessage, 'outboundTrains': outboundTrains, 'returnTrains': returnTrains, 'travelClass': travelClass, 'nbTickets': nbTickets })
+            return render(request, "allTrain.html", {'errorMessage': errorMessage, 'outboundTrains': outboundTrains, 'returnTrains': returnTrains, 'travelClass': travelClass, 'nbTickets': nbTickets, 'prixBilletOutbound': prixBilletOutbound, 'prixBilletReturn': prixBilletReturn })
     else:
         allStations = json.loads(get_all_stations_soap())
         form = TrainForm()

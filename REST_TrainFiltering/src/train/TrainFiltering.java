@@ -61,7 +61,7 @@ public class TrainFiltering extends ServerResource {
 					"LEFT JOIN billet as b " + 
 					"ON b.idVoyage = v.id " + 
 					"WHERE v.idStationDepart = ? AND v.idStationArrivee = ? AND v.dateDepart >= ? AND v.dateDepart < DATE_ADD(?, INTERVAL 1 DAY) AND b.classe = ?) + ?)";
-			selectQuery += condition + " OR " + condition + ";";
+			selectQuery += condition + " OR " + condition + " GROUP BY idVoyage;";
 			PreparedStatement preparedStatement = con.prepareStatement(selectQuery);
             preparedStatement.setInt(1, idDeparture);
             preparedStatement.setInt(2, idArrival);

@@ -7,7 +7,7 @@ import java.util.Iterator;
 import org.json.JSONObject;
 
 public class TrainReservation {
-	public String reserveTrain(int idClient, int flex, String travelClass, int idVoyage) {
+	public String reserveTrain(int[] idClient, int[] flex, String[] travelClass, int[] idVoyage, int nbTickets) {
 		try {
 			String res = HttpCall.sendGET("http://localhost:8080/REST_TrainFiltering/train/billet/reserve/" +
 		idClient + '/' + flex + '/' + travelClass + '/' + idVoyage);
