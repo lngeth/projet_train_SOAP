@@ -1,5 +1,8 @@
 package train;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import utils.HttpCall;
 
 public class TrainSearch {
@@ -18,10 +21,23 @@ public class TrainSearch {
 			String res = HttpCall.sendGET("http://localhost:8080/REST_TrainFiltering/train/filter/" + idDeparture +
 					"/" + idArrival + "/" + outboundDateTime + "/" + returnDateTime +
 					"/" + nbTickets + "/" + travelClass);
-            return res;
+			
+			String resultToReturn = "";
+			JSONObject json = new JSONObject(res);
+			if (json.getString("status").equals("500")) {
+				resultToReturn = "No available train";
+			} else {
+				JSONArray listTrain = json.getJSONArray("listTrain");
+				if (listTrain.length() == 0) {
+					resultToReturn = "No available train";
+				} else {
+					resultToReturn = listTrain.toString();
+				}
+			}
+            return resultToReturn;
 		} catch(Exception e) {
 			e.printStackTrace();
-			return "No list available";
+			return e.getMessage();
 		}
 	}
 }

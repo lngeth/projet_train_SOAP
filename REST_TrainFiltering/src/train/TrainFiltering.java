@@ -86,13 +86,12 @@ public class TrainFiltering extends ServerResource {
 			
 			// Execute query
 			ResultSet rs = preparedStatement.executeQuery();
-			JSONArray jsonArray = new JSONArray();
+			JSONObject toReturn = new JSONObject();
+			JSONArray tabResult = new JSONArray();
 			
-			if (!rs.next()) {
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("error", "No available trains");
-				jsonArray.put(jsonObject);
-			} else {
+			toReturn.put("status", "200");
+			
+			if (rs.next()){
 				do {
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("id", rs.getInt(1));
@@ -103,17 +102,20 @@ public class TrainFiltering extends ServerResource {
 					jsonObject.put("prixFirst", rs.getInt(6));
 					jsonObject.put("prixPremium", rs.getInt(7));
 					jsonObject.put("prixFlexibilite", rs.getInt(8));
-					jsonArray.put(jsonObject);
+					tabResult.put(jsonObject);
 				} while(rs.next());
 			}
+			toReturn.put("listTrain", tabResult);
 			
-			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonArray);
+			JsonRepresentation jsonRepresentation = new JsonRepresentation(toReturn);
 			
 			con.close();
 			return jsonRepresentation;
 		} catch(Exception e) {
+			e.printStackTrace();
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("error", "Error request");
+			jsonObject.put("status", "500");
+			jsonObject.put("listTrain", "");
 			return new JsonRepresentation(jsonObject);
 		}
 	}

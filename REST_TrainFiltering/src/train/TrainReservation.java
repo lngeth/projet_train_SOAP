@@ -3,9 +3,7 @@ package train;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
@@ -26,46 +24,32 @@ public class TrainReservation extends ServerResource {
 			String travelClass = (String) getRequestAttributes().get("travelClass");
 			
 			// Prepare query
-			String selectQuery = "SELECT t.id as idTrain, t.nom, v.dateDepart, v.id as idVoyage, v.prixStandard, v.prixFirst, v.prixPremium, v.prixFlexibilite " + 
-					"FROM voyage as v " + 
-					"INNER JOIN train as t " + 
-					"ON t.id = v.idTrain " + 
-					"LEFT JOIN billet as b " + 
-					"ON b.idVoyage = v.id " + 
-					"WHERE ";
+			String selectQuery = "INSERT INTO billet (flexible, classe, idClient, idVoyage) VALUES (?,?,?,?);";
 			PreparedStatement preparedStatement = con.prepareStatement(selectQuery);
-            preparedStatement.setInt(1, idDeparture);
+            preparedStatement.setInt(1, flex);
+            preparedStatement.setString(2, travelClass);
+            preparedStatement.setInt(3, idClient);
+            preparedStatement.setInt(4, idVoyage);
 			
 			// Execute query
-			ResultSet rs = preparedStatement.executeQuery();
-			JSONArray jsonArray = new JSONArray();
+			int rs = preparedStatement.executeUpdate();
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("status", "200");
 			
-			if (!rs.next()) {
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("error", "No available trains");
-				jsonArray.put(jsonObject);
+			if (rs == 0) {
+				jsonObject.put("success", false);
 			} else {
-				do {
-					JSONObject jsonObject = new JSONObject();
-					jsonObject.put("id", rs.getInt(1));
-					jsonObject.put("name", rs.getString(2));
-					jsonObject.put("dateDepart", rs.getString(3));
-					jsonObject.put("idVoyage", rs.getInt(4));
-					jsonObject.put("prixStandard", rs.getInt(5));
-					jsonObject.put("prixFirst", rs.getInt(6));
-					jsonObject.put("prixPremium", rs.getInt(7));
-					jsonObject.put("prixFlexibilite", rs.getInt(8));
-					jsonArray.put(jsonObject);
-				} while(rs.next());
+				jsonObject.put("success", true);
 			}
 			
-			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonArray);
+			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonObject);
 			
 			con.close();
 			return jsonRepresentation;
 		} catch(Exception e) {
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("error", "Error request");
+			jsonObject.put("status", "500");
+			jsonObject.put("success", false);
 			return new JsonRepresentation(jsonObject);
 		}
 	}

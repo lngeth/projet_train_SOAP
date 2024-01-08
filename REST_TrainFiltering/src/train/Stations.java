@@ -25,29 +25,30 @@ public class Stations extends ServerResource {
 			
 			// Execute query
 			ResultSet rs = preparedStatement.executeQuery();
-			JSONArray jsonArray = new JSONArray();
 			
+			JSONObject toReturn = new JSONObject();
+			JSONArray tabResult = new JSONArray();
 			
-			if (!rs.next()) {
-				JSONObject obj = new JSONObject();
-				obj.put("error", "No station available");
-				jsonArray.put(obj);
-			} else {
+			toReturn.put("status", "200");
+			
+			if (rs.next()){
 				do {		
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("id", rs.getString(1));
 					jsonObject.put("name", rs.getString(2));
-					jsonArray.put(jsonObject);
+					tabResult.put(jsonObject);
 				} while(rs.next());
 			}
+			toReturn.put("listStation", tabResult);
 			
-			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonArray);
+			JsonRepresentation jsonRepresentation = new JsonRepresentation(toReturn);
 			
 			con.close();
 			return jsonRepresentation;
 		} catch(Exception e) {
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("error", "Error request");
+			jsonObject.put("status", "500");
+			jsonObject.put("listStation", "");
 			return new JsonRepresentation(jsonObject);
 		}
 	}
