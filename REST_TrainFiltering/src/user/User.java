@@ -14,17 +14,17 @@ import org.restlet.resource.ServerResource;
 
 public class User extends ServerResource {
 	@Get("json")
-	public Representation getAllTrains() {
+	public Representation getUserByName() {
 		try {			
 			Class.forName("com.mysql.jdbc.Driver");  
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/train_project","lngeth","0207");
 
-      String name = (String) getRequestAttributes().get("name");
+			String name = (String) getRequestAttributes().get("name");
       
 			// Prepare query
 			String selectQuery = "SELECT * from client WHERE nom = ?;";			
 			PreparedStatement preparedStatement = con.prepareStatement(selectQuery);
-      preparedStatement.setString(1, name);
+			preparedStatement.setString(1, name);
 			
 			// Execute query
 			ResultSet rs = preparedStatement.executeQuery();
@@ -33,10 +33,10 @@ public class User extends ServerResource {
 			toReturn.put("status", "200");
 
 			if (rs.next()){
-        toReturn.put("idClient", Integer.toString(rs.getInt(1)));
+				toReturn.put("idClient", Integer.toString(rs.getInt(1)));
 			} else {
-        toReturn.put("idClient", "");
-      }
+				toReturn.put("idClient", "");
+			}
 			
 			JsonRepresentation jsonRepresentation = new JsonRepresentation(toReturn);
 			
@@ -46,6 +46,52 @@ public class User extends ServerResource {
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("status", "500");
 			jsonObject.put("idClient", "");
+			return new JsonRepresentation(jsonObject);
+		}
+	}
+
+	@Post
+	public Representation createUserByName(Form form) {
+		try {		
+			Class.forName("com.mysql.jdbc.Driver");  
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/train_project","lngeth","0207");
+			
+			// Retrieve parameters
+			String name = (String) form.getValues("name");
+			
+			// Return variable
+			JSONObject jsonObject = new JSONObject();
+
+			// Check if aleardy in database
+			String selectQuery = "SELECT * FROM client WHERE nom = ?;";
+			PreparedStatement preparedStatement = con.prepareStatement(selectQuery);
+			preparedStatement.setString(1, name);
+
+			ResultSet rs = preparedStatement.executeQuery();
+			jsonObject.put("status", "200");
+			if (rs.next()) {
+				jsonObject.put("success", false);
+				return new JsonRepresentation(jsonObject);
+			}
+
+			String insertQuery = "INSERT INTO client (nom) VALUES (?);";
+			preparedStatement = con.prepareStatement(insertQuery);
+			preparedStatement.setString(1, name);
+			// Execute query
+			int insertRes = preparedStatement.executeUpdate();
+
+			if (insertRes == 1) {
+				jsonObject.put("success", true);
+			} else {
+				jsonObject.put("success", false);
+			}
+			
+			con.close();
+			return new JsonRepresentation(jsonObject);
+		} catch(Exception e) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("status", "500");
+			jsonObject.put("success", false);
 			return new JsonRepresentation(jsonObject);
 		}
 	}
