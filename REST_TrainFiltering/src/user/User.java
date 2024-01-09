@@ -6,15 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.json.JSONObject;
-import org.json.JSONArray;
+import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
+import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 public class User extends ServerResource {
 	@Get("json")
-	public Representation getUserByName() {
+	public Representation getIdUserByName() {
 		try {			
 			Class.forName("com.mysql.jdbc.Driver");  
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/train_project","lngeth","0207");
@@ -62,7 +63,7 @@ public class User extends ServerResource {
 			// Return variable
 			JSONObject jsonObject = new JSONObject();
 
-			// Check if aleardy in database
+			// Check if already in database
 			String selectQuery = "SELECT * FROM client WHERE nom = ?;";
 			PreparedStatement preparedStatement = con.prepareStatement(selectQuery);
 			preparedStatement.setString(1, name);

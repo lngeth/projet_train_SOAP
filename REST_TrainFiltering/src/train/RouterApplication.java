@@ -4,6 +4,8 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
+import user.User;
+
 public class RouterApplication extends Application {
 	/**
 	 * Creates a root Restlet that will receive all incoming calls.
@@ -16,6 +18,7 @@ public class RouterApplication extends Application {
 		router.attach("/train/filter/{idDeparture}/{idArrival}/{outboundDateTime}/{returnDateTime}/{nbTickets}/{travelClass}", TrainFiltering.class);
 		router.attach("/station/all", Stations.class);
 		router.attach("/train/billet/reserve", TrainReservation.class);
+		router.attach("/user/{name}", User.class);
 		
 		return router;
 	}
