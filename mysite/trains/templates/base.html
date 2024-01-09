@@ -9,23 +9,48 @@
 </head>
 
 <body>
-  <nav>
-    <a href="{% url 'index' %}">Accueil</a>
-    <a href="{% url 'searchTrain' %}">rechercher un train</a>
-    {% if request.session.idClient %}
-    <div>
-      <span>Client n°{{ request.session.idClient }}</span>
-      <a href="{% url 'logout' %}">Deconnexion</a>
-    </div>
-    {% else %}
-    <a href="{% url 'login' %}">
-      <button>Se connecter</button>
-    </a>
-    {% endif %}
-  </nav>
 
-  <div id="main_content">
-    {% block content %}{% endblock %}
+  <div id="navbar">
+    <nav>
+      <ul>
+        <li>
+          <a href="{% url 'index' %}">
+            <img src="{% static 'assets/accueil_icon.png' %}" alt="Icone accueil">
+            <span>Accueil</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'searchTrain' %}">
+            <img src="{% static 'assets/api_icon.png' %}" alt="Icone API">
+            <span>rechercher un train</span>
+          </a>
+        </li>
+        {% if request.session.idClient %}
+        <li>
+          <div style="text-align: center;">
+            Client n°{{ request.session.idClient }}
+          </div>
+          <span>
+            <a href="{% url 'logout' %}">
+              <button class="redirect_button">Deconnexion</button>
+            </a>
+          </span>
+        </li>
+        {% else %}
+        <li>
+          <a href="{% url 'login' %}">
+            <button class="redirect_button">Se connecter</button>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+
+  <div id="content">
+    <div id="container_content">
+      {% block content %}{% endblock %}
+    </div>
   </div>
 </body>
 

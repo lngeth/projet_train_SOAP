@@ -1,0 +1,144 @@
+/* NAVBAR */
+
+div#navbar {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 50px;
+}
+
+nav {
+  width: 500px;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  transition: transform .2s;
+}
+
+nav ul li:hover {
+  transform: scale(1.2);
+}
+
+nav ul li a {
+  display: flex;  
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+nav ul li a:visited {
+  color: black;
+}
+
+nav ul li a img {
+  width: 25px;
+  height: 25px;
+  border: 0;
+}
+
+/* CONTENT */
+
+div#content {
+  display: flex;
+  justify-content: center;
+}
+div#container_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*justify-content: space-around;*/
+  gap: 20px;
+  width: 80%;
+  max-height: 35vw;
+  padding: 2% 0;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+/* Login/Register */
+
+.form_authentication {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.form_research {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form_research div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form_recap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form_recap h2 {
+  text-align: center;
+}
+
+.form_recap .recap {
+  display: flex;
+  gap: 10px;
+}
+
+/* Button */
+
+.redirect_button {
+  background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.redirect_button:hover {
+  filter: brightness(85%);
+}
+
+.save_button {
+  background-color: #04AA6D; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.save_button:hover {
+  filter: brightness(85%);
+}
+
+
+/* Infos message */
+
+.success_message {
+  font-weight: bold;
+  font-size: 2em;
+  color: #27AE60;
+}
+
+.error_message {
+  font-weight: bold;
+  color: #D2042D;
+}

@@ -3,23 +3,23 @@
 {% block title %}Résultat recherche train{% endblock %}
 
 {% block content %}
-<h1>Résultats trains</h1>
-
-{% if errorMessage %}
-<p>Aucun trains ne repondent à vos critères...</p>
-{% else %}
-
 <div>
-  <p>Vous voyagez en {{ travelClass }} et vous souhaitez {{ nbTickets }} billet(s)</p>
+  <h1 style="text-align: center;">Résultats trains</h1>
+  <p>Vous voyagez en <strong>{{ travelClass }}</strong> et vous souhaitez <strong>{{ nbTickets }} billet(s)</strong></p>
 </div>
 
-<form action="{% url 'reserveTrip' %}" method="post">
-{% csrf_token %}
+{% if errorMessage %}
+<p class="error_message">Aucun trains ne repondent à vos critères...</p>
+{% else %}
+
+
+<form class="form_research" action="{% url 'reserveTrip' %}" method="post">
+  {% csrf_token %}
 
 <input type="hidden" name="nbTickets" value="{{ nbTickets }}" />
 
+<h2>Trains aller</h2>
 <div>
-  <h2>Trains aller</h2>
   {% if outboundTrains %}
   <fieldset>
     <legend>Choisissez un train aller</legend>
@@ -48,8 +48,8 @@
   {% endif %}
 </div>
 
+<h2>Trains retour</h2>
 <div>
-  <h2>Trains retour</h2>
   {% if returnTrains %}
   <fieldset>
     <legend>Choisissez un train retour</legend>
@@ -81,9 +81,8 @@
   {% endif %}
 </div>
 
-<div>
-  <input type="submit" value="Submit">
-</div>
+<input class="save_button" type="submit" value="Submit">
+
 </form>
 
 {% endif %}

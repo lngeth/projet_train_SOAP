@@ -6,23 +6,25 @@
 
 <h2>Connexion</h2>
 
-<form action="{% url 'login' %}" method="POST">
+<form class="form_authentication" action="{% url 'login' %}" method="POST">
   {% csrf_token %}
-
   <div>
-    <input type="text" name="name">
-    <div>
-      <input type="submit" value="Submit">
-    </div>
+    <label for="id_name">Nom</label>
+    <input id="id_name" type="text" name="name">
+  </div>
+  <div>
+    <input class="redirect_button" type="submit" value="Submit">
   </div>
 </form>
 
 <a href="{% url 'register' %}">
-  <button>S'inscrire</button>
+  <button class="redirect_button">S'inscrire</button>
 </a>
 
+
+
 {% if message %}
-{{ message }}
+<p class="error_message">{{ message }}</p>
 {% endif %}
 
 {% endblock %}

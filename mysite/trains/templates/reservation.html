@@ -4,12 +4,12 @@
 
 {% block content %}
 
-<form action="{% url 'comfirmReservation' %}" method="post">
+<form class="form_recap" action="{% url 'comfirmReservation' %}" method="post">
   {% csrf_token %}
 
   <div>
     <h2>Récapitulatif Aller</h2>
-    <div>
+    <div class="recap">
       <p>Voyage n°{{ outboundVoyage.idVoyage }}</p>
       <p>Train n°{{ outboundVoyage.idTrain }}</p>
       <p>
@@ -51,7 +51,7 @@
   {% if returnVoyage %}
   <div>
     <h2>Récapitulatif Retour</h2>
-    <div>
+    <div class="recap">
       <p>Voyage n°{{ returnVoyage.idVoyage }}</p>
       <p>Train n°{{ returnVoyage.idTrain }}</p>
 
@@ -93,9 +93,7 @@
   <h2>Pas de retour</h2>
   {% endif %}
 
-  <div>
-    <input type="submit" value="Valider la réservation">
-  </div>
+  <input class="save_button" type="submit" value="Valider la réservation">
 
 </form>
 

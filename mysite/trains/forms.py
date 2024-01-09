@@ -18,7 +18,7 @@ class TrainForm(forms.Form):
         label='Sélectionnez une heure'
     )
     
-    nbTickets = forms.IntegerField()
+    nbTickets = forms.IntegerField(min_value=1)
     travelClass = forms.ChoiceField(
         choices=[("First", "Première"), 
                  ("Business", "Business"),

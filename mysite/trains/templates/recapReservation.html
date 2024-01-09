@@ -4,7 +4,9 @@
 
 {% block content %}
 
-<p>{{statusReservation}}</p>
-<a href="{% url 'index' %}"><button>Retourner à l'accueil</button></a>
+<p class="success_message">{{ statusReservation }}</p>
+<a href="{% url 'index' %}">
+  <button class="redirect_button">Retourner à l'accueil</button>
+</a>
 
 {% endblock %}

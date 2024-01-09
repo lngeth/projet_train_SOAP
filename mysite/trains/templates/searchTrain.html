@@ -6,11 +6,12 @@
 <h1>Recherche de train</h1>
 
 <div>
-  <form action="{% url 'searchTrain' %}" method="post">
+  <form class="form_research" action="{% url 'searchTrain' %}" method="post">
     {% csrf_token %}
   
     <div>
-      <select name="departure" required>
+      <label for="id_outbound_station">Départ</label>
+      <select id="id_outbound_station" name="departure" required>
         {% for s in allStations %}
         <option value="{{ s.id }}">{{ s.name }}</option>
         {% endfor %}
@@ -18,7 +19,8 @@
     </div>
 
     <div>
-      <select name="arrival" required>
+      <label for="id_return_station">Arrivée</label>
+      <select id="id_return_station" name="arrival" required>
         {% for s in allStations %}
         <option value="{{ s.id }}">{{ s.name }}</option>
         {% endfor %}
@@ -26,26 +28,32 @@
     </div>
 
     <div>
-      {{ form.outboundDate }}
-      {{ form.outboundTime }}
+      <label>Date de départ&nbsp&nbsp&nbsp</label>
+      <div>
+        {{ form.outboundDate }}
+        {{ form.outboundTime }}
+      </div>
     </div>
 
     <div>
-      {{ form.returnDate }}
-      {{ form.returnTime }}
+      <label>Date de retour</label>
+      <div>
+        {{ form.returnDate }}
+        {{ form.returnTime }}
+      </div>
     </div>
 
     <div>
+      <label>Nombre de billets</label>
       {{ form.nbTickets }}
     </div>
 
     <div>
+      <label>Siège</label>
       {{ form.travelClass }}
     </div>
   
-    <div>
-      <input type="submit" value="Submit">
-    </div>
+    <input class="save_button" type="submit" value="Submit">
   </form>
 </div>
 
