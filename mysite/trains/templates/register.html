@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+
+<h2>Inscription</h2>
+
+<form action="{% url 'register' %}" method="POST">
+  {% csrf_token %}
+
+  <div>
+    <input type="text" name="name">
+    <div>
+      <input type="submit" value="Submit">
+    </div>
+  </div>
+</form>
+
+{% if message %}
+{{ message }}
+{% endif %}
+
+{% endblock %}

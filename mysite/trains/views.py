@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 
+
 from .forms import TrainForm
 
 from zeep import Client
@@ -12,12 +13,51 @@ from datetime import datetime, timedelta
 def index(request):
     return render(request, 'index.html')
 
-def searchTrain(request):
-    # if this is a POST request we need to process the form data
+def login(request):
     if request.method == "POST":
-        # create a form instance and populate it with data from the request:
+        name = request.POST.get('name')
+        
+        res = appel_get_client_id_by_name_soap(name)
+        if (res == "No client available" or res == "" or res is None):
+            message = "Introuvable dans la BD"
+            return render(request, 'login.html', { 'message': message })
+        else:
+            idClient = json.loads(res)
+            request.session['idClient'] = idClient
+            
+        return redirect('index')
+    else:
+        return render(request, 'login.html')
+
+def register(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        
+        res = appel_create_client_soap(name)
+        if (res == "No client created" or name == ""):
+            message = "Nom incorrect"
+        else:
+            success = json.loads(res)
+            if (success):
+                message = "Création réussie !"
+                return render(request, 'login.html', {'message': message})
+            else:
+                message = "Utilisateur déjà existant"
+        return render(request, 'register.html', {'message': message})
+    else:
+        return render(request, 'register.html')
+
+def logout(request):
+    request.session.flush()
+    
+    return redirect('index')
+
+def searchTrain(request):
+    if (request.session.get('idClient') is None):
+        return render(request, 'login.html', {'message': "Vous devez d'abord vous connectez avant de rechercher des trains !"})
+    
+    if request.method == "POST":
         form = TrainForm(request.POST)
-        # check whether it's valid:
         if form.is_valid():
             idDeparture = request.POST.get('departure')
             idArrival = request.POST.get('arrival')
@@ -114,6 +154,9 @@ def get_all_stations_soap():
     return result
 
 def reserveTrip(request):
+    if (request.session.get('idClient') is None):
+        return render(request, 'login.html', {'message': "Vous devez d'abord vous connectez avant de rechercher des trains !"})
+    
     if request.method == "POST":
         outboundVoyage = json.loads(request.POST.get('outboundVoyage'))
 
@@ -128,8 +171,11 @@ def reserveTrip(request):
         return redirect('index')
 
 def comfirmReservation(request):
+    if (request.session.get('idClient') is None):
+        return render(request, 'login.html', {'message': "Vous devez d'abord vous connectez avant de rechercher des trains !"})
+    
     if request.method == "POST":
-        idClient = 1 # TODO Récupérer l'ID client
+        idClient = request.session.get('idClient')
         
         outboundVoyageValidated = json.loads(request.POST.get('outboundVoyageValidated'))
         idClient = [idClient]
@@ -165,6 +211,32 @@ def appel_reservation_train_soap(idClient, flex, travelClass, idVoyage, nbTicket
                                       travelClass=travelClass,
                                       idVoyage=idVoyage,
                                       nbTickets=nbTickets)
+    
+    xml_soap = etree.tostring(history.last_received["envelope"], encoding="unicode", pretty_print=True)
+    print(xml_soap)
+    return result
+
+def appel_get_client_id_by_name_soap(name):
+    wsdl_url = 'http://localhost:8080/SOAPTrainBooking/services/Client?wsdl'
+
+    history = HistoryPlugin()
+    
+    client = Client(wsdl_url, plugins=[history])
+    
+    result = client.service.getClientIdByName(name=name)
+    
+    xml_soap = etree.tostring(history.last_received["envelope"], encoding="unicode", pretty_print=True)
+    print(xml_soap)
+    return result
+
+def appel_create_client_soap(name):
+    wsdl_url = 'http://localhost:8080/SOAPTrainBooking/services/Client?wsdl'
+
+    history = HistoryPlugin()
+    
+    client = Client(wsdl_url, plugins=[history])
+    
+    result = client.service.createClient(name=name)
     
     xml_soap = etree.tostring(history.last_received["envelope"], encoding="unicode", pretty_print=True)
     print(xml_soap)

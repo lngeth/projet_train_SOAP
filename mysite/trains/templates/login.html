@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Authentification{% endblock %}
+
+{% block content %}
+
+<h2>Connexion</h2>
+
+<form action="{% url 'login' %}" method="POST">
+  {% csrf_token %}
+
+  <div>
+    <input type="text" name="name">
+    <div>
+      <input type="submit" value="Submit">
+    </div>
+  </div>
+</form>
+
+<a href="{% url 'register' %}">
+  <button>S'inscrire</button>
+</a>
+
+{% if message %}
+{{ message }}
+{% endif %}
+
+{% endblock %}

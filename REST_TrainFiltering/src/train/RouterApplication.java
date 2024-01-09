@@ -4,7 +4,8 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
-import user.User;
+import user.CreateClient;
+import user.GetClient;
 
 public class RouterApplication extends Application {
 	/**
@@ -18,7 +19,8 @@ public class RouterApplication extends Application {
 		router.attach("/train/filter/{idDeparture}/{idArrival}/{outboundDateTime}/{returnDateTime}/{nbTickets}/{travelClass}", TrainFiltering.class);
 		router.attach("/station/all", Stations.class);
 		router.attach("/train/billet/reserve", TrainReservation.class);
-		router.attach("/user/{name}", User.class);
+		router.attach("/client/get/{name}", GetClient.class);
+		router.attach("/client/create", CreateClient.class);
 		
 		return router;
 	}

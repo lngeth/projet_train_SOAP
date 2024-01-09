@@ -12,6 +12,16 @@
   <nav>
     <a href="{% url 'index' %}">Accueil</a>
     <a href="{% url 'searchTrain' %}">rechercher un train</a>
+    {% if request.session.idClient %}
+    <div>
+      <span>Client n°{{ request.session.idClient }}</span>
+      <a href="{% url 'logout' %}">Deconnexion</a>
+    </div>
+    {% else %}
+    <a href="{% url 'login' %}">
+      <button>Se connecter</button>
+    </a>
+    {% endif %}
   </nav>
 
   <div id="main_content">
