@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "85443b12-7b92-4bf9-83df-df5129feb52d",
+		"name": "project_train",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19375932"
+	},
+	"item": [
+		{
+			"name": "SOAP_trainAPI",
+			"item": [
+				{
+					"name": "reserveTrain",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SOAPTrainBooking/services/TrainReservation/reserveTrain?idClient=1&idClient=1&flex=1&flex=0&travelClass=First&travelClass=First&idVoyage=1&idVoyage=2&nbTickets=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SOAPTrainBooking",
+								"services",
+								"TrainReservation",
+								"reserveTrain"
+							],
+							"query": [
+								{
+									"key": "idClient",
+									"value": "1"
+								},
+								{
+									"key": "idClient",
+									"value": "1"
+								},
+								{
+									"key": "flex",
+									"value": "1"
+								},
+								{
+									"key": "flex",
+									"value": "0"
+								},
+								{
+									"key": "travelClass",
+									"value": "First"
+								},
+								{
+									"key": "travelClass",
+									"value": "First"
+								},
+								{
+									"key": "idVoyage",
+									"value": "1"
+								},
+								{
+									"key": "idVoyage",
+									"value": "2"
+								},
+								{
+									"key": "nbTickets",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllStations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SOAPTrainBooking/services/StationSearch/getAllStations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SOAPTrainBooking",
+								"services",
+								"StationSearch",
+								"getAllStations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterTrain",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SOAPTrainBooking/services/TrainSearch/searchByAllCriterias?idDeparture=2&idArrival=1&outboundDateTime=1704106800000&returnDateTime=1704114000000&nbTickets=1&travelClass=First",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SOAPTrainBooking",
+								"services",
+								"TrainSearch",
+								"searchByAllCriterias"
+							],
+							"query": [
+								{
+									"key": "idDeparture",
+									"value": "2"
+								},
+								{
+									"key": "idArrival",
+									"value": "1"
+								},
+								{
+									"key": "outboundDateTime",
+									"value": "1704106800000",
+									"description": "Outbound datetime in timestamp millisecond"
+								},
+								{
+									"key": "returnDateTime",
+									"value": "1704114000000",
+									"description": "Return datetime in timestamp millisecond"
+								},
+								{
+									"key": "nbTickets",
+									"value": "1"
+								},
+								{
+									"key": "travelClass",
+									"value": "First"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClientIdByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SOAPTrainBooking/services/Client/getClientIdByName?name=Mammadou",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SOAPTrainBooking",
+								"services",
+								"Client",
+								"getClientIdByName"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Mammadou"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createClient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SOAPTrainBooking/services/Client/createClient?name=Steerent",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SOAPTrainBooking",
+								"services",
+								"Client",
+								"createClient"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Steerent"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "REST_trainAPI",
+			"item": [
+				{
+					"name": "reserveTrain",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idClient",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "idClient",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "flex",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "flex",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "idVoyage",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "idVoyage",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "travelClass",
+									"value": "First",
+									"type": "text"
+								},
+								{
+									"key": "travelClass",
+									"value": "First",
+									"type": "text"
+								},
+								{
+									"key": "nbTickets",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/REST_TrainFiltering/train/billet/reserve?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"REST_TrainFiltering",
+								"train",
+								"billet",
+								"reserve"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllStations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/REST_TrainFiltering/station/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"REST_TrainFiltering",
+								"station",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterTrain",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/REST_TrainFiltering/train/filter/2/1/1704106800000/1704114000000/2/First",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"REST_TrainFiltering",
+								"train",
+								"filter",
+								"2",
+								"1",
+								"1704106800000",
+								"1704114000000",
+								"2",
+								"First"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkClientExistByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/REST_TrainFiltering/client/get/Steerent",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"REST_TrainFiltering",
+								"client",
+								"get",
+								"Steerent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createClient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Steerent",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/REST_TrainFiltering/client/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"REST_TrainFiltering",
+								"client",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -84,7 +84,7 @@ def searchTrain(request):
                             elif (travelClass == "Standard"):
                                 prixBilletOutbound = t['prixStandard']
                             else:
-                                prixBilletOutbound = t['prixBusiness']
+                                prixBilletOutbound = t['prixPremium']
                     else:
                         returnTrains.append(t)
                         if (prixBilletReturn == 0):
@@ -93,7 +93,7 @@ def searchTrain(request):
                             elif (travelClass == "Standard"):
                                 prixBilletReturn = t['prixStandard']
                             else:
-                                prixBilletReturn = t['prixBusiness']
+                                prixBilletReturn = t['prixPremium']
             else:
                 errorMessage = "No available train"
                 

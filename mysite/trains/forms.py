@@ -21,7 +21,7 @@ class TrainForm(forms.Form):
     nbTickets = forms.IntegerField(min_value=1)
     travelClass = forms.ChoiceField(
         choices=[("First", "Première"), 
-                 ("Business", "Business"),
+                 ("Premium", "Premium"),
                  ("Standard", "Standard")],
         label='Sélectionnez le type de siège'
     )
